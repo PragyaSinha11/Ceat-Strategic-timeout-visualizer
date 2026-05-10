@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tire Timer Overlay</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .container {
+            position: relative;
+            display: inline-block;
+            line-height: 0;
+        }
+
+        /* The Background Image */
+        .background-image {
+            max-width: 100vw;
+            max-height: 100vh;
+            display: block;
+        }
+
+        /* The Timer Styling */
+        #timer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.8), 
+                         0px 0px 10px #00e5ff; /* Cyan glow to match energy vibe */
+            pointer-events: none; /* Allows clicks to pass through if needed */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="tire-background.png" alt="CEAT Tire" class="background-image">
+        
+        <div id="timer">00:00:00</div>
+    </div>
+
+    <script>
+        // Timer Logic: Simple Stopwatch
+        let startTime = Date.now();
+
+        function updateTimer() {
+            const now = Date.now();
+            const diff = now - startTime;
+
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+
+            // Formatting numbers to always show two digits
+            const displayH = h.toString().padStart(2, '0');
+            const displayM = m.toString().padStart(2, '0');
+            const displayS = s.toString().padStart(2, '0');
+
+            document.getElementById('timer').textContent = `${displayH}:${displayM}:${displayS}`;
+        }
+
+        // Update the timer every 1 second
+        setInterval(updateTimer, 1000);
+    </script>
+
+</body>
+</html>
